@@ -1,0 +1,38 @@
+class Solution {
+    private int m,n;
+    private  int [][]  directions={{-1,0},{1,0},{0,-1},{0,1}};
+    private int dfs(int i, int j, int[][] grid)
+    {
+        if(i<0||i>=m||j<0||j>=n|| grid[i][j]==0)
+        {
+            return 0;
+        }
+
+        int fishcount=grid[i][j];
+        grid[i][j]=0;
+
+    for(int [] dir:directions)
+    {
+        int i_=i+dir[0];
+        int j_=j+dir[1];
+        fishcount+=dfs(i_,j_,grid);
+    }
+    return fishcount;
+    }
+    public int findMaxFish(int[][] grid) {
+         m=grid.length;
+         n=grid[0].length;
+        int maxfish=0;
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j]>0)
+                {
+                    maxfish=Math.max(maxfish, dfs(i,j, grid));
+                }
+            }
+        }
+        return maxfish;
+    }
+}
